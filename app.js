@@ -2,37 +2,37 @@ const express = require('express');
 const fs = require('fs');
 const app = express();
 
-// Set the view engine to Pug
+// setting the view engine to pug
 app.set('view engine', 'pug');
 
-// Serve static files from the 'public' folder
+// pug will read public folder and we can get style.css and other things
 app.use(express.static('public'));
 
-// Parse URL-encoded bodies (as sent by HTML forms)
+// parse url bodies
 app.use(express.urlencoded({ extended: true }));
 
-// Define the filename for the file that will store the to-do list
+// variable for filename to keep todo posts
 const todoListFilename = 'todoList.txt';
 
-// Load the to-do list from the file (if it exists)
+// load todolist from file if it exists
 let todoList = [];
 if (fs.existsSync(todoListFilename)) {
   const fileContent = fs.readFileSync(todoListFilename, 'utf8');
   todoList = fileContent.split('\n').filter(todo => todo !== '');
 }
 
-// Define a function to save the to-do list to the file
+// save todolist to file
 function saveTodoList() {
   const fileContent = todoList.join('\n');
   fs.writeFileSync(todoListFilename, fileContent);
 }
 
-// Define a route to render the to-do list page
+// render route
 app.get('/', (req, res) => {
   res.render('index', { todoList });
 });
 
-// Define a route to handle form submissions
+// post submission route
 app.post('/add', (req, res) => {
   const newTodo = req.body.todo.trim();
   if (newTodo.length > 0) {
@@ -40,19 +40,18 @@ app.post('/add', (req, res) => {
     saveTodoList();
   } else {
     console.log('Empty to-do item submitted');
-    // you can also send an error response to the client here
   }
   res.redirect('/');
 });
 
-// Define a route to handle form submissions for deleting a post
+// delete post
 app.post('/delete', (req, res) => {
   const todoToDelete = req.body.todo;
   todoList = todoList.filter((todo) => todo !== todoToDelete);
   saveTodoList();
   res.redirect('/');
 });
-
+//export post to json
 app.get('/export', (req, res) => {
     const filename = 'todos.json';
     const data = JSON.stringify(todoList, null, 2);
@@ -80,7 +79,7 @@ app.get('/export', (req, res) => {
 //     res.redirect('/');
 //   });
 
-// Start the server
+// START SERVER ON PORT 8000
 app.listen(8000, () => {
   console.log('Server listening on port 8000');
 });
