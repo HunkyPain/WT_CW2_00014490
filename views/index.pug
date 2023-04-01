@@ -1,0 +1,26 @@
+html
+  head
+    title To-Do List App
+    link(rel='stylesheet', href='/style.css')
+    link(href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,700&display=swap', rel='stylesheet')
+  body
+header
+    strong This web application was created to fulfill Web Technology module’s requirements and does not represent an actual company or service.
+    h1 To-Do List
+    form(action='/add', method='post')
+      input(type='text', name='todo', placeholder='Enter a new to-do...', required)
+      button(type='submit') Add
+      button(type='button', style='background-color: blue; color: white; margin-left: 10px;', onclick="window.location.href='/export'") Export JSON
+    table
+      thead
+        tr
+          th To-Do
+          th Actions
+      tbody
+        each todo in todoList
+          tr
+            td= todo
+            td
+              form(action='/delete', method='post')
+                input(type='hidden', name='todo', value=todo)
+                button(type='submit', style='background-color: red; color: white;') Delete
