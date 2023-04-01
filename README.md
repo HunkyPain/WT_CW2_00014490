@@ -21,9 +21,11 @@ Total dependencies used:
 Express
 Pug
 
-app.js - main backend
-views/ - pug html (frontend)
-public/ - pug styles (frontnend)
-todoList.txt - CONTAINS MAIN TODO POST DB
-package.json - nodejs config file
-README.md - readme file & docs
+
+## Project files description
+- app.js - main backend
+- views/ - pug html (frontend)
+- public/ - pug styles (frontnend)
+- todoList.txt - CONTAINS MAIN TODO POST DB
+- package.json - nodejs config file
+- README.md - readme file & docs
